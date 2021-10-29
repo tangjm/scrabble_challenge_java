@@ -57,7 +57,9 @@ public class Scrabble {
                 score += letterScore(charArr[i]);
                 if (applyDoubleLetterBonus(charArr[i])) {
                     score *= 2;
-                };
+                } else if (applyTripleLetterBonus(charArr[i])) {
+                    score *= 3;
+                }
             }
         }
 
@@ -119,6 +121,17 @@ public class Scrabble {
         }
         return false;
     }
+
+    public boolean applyTripleLetterBonus(char letter) {
+        for (int i = 0; i < this.tripleLetters.length; i++) {
+            if (letter == this.tripleLetters[i]) {
+                this.tripleLetters[i] = '\u0000';
+                return true;
+            }
+        }
+        return false;
+    }
+
 
 
 }
