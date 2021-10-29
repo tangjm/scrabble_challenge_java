@@ -6,7 +6,7 @@ import java.util.Locale;
 public class Scrabble {
     /*int[] index = {0, 1, 2, 3, 4};
     int[] values = {1, 2, 3, 4, 5};*/
-    char[][] letterValues = {
+    final private static char[][] letterValues = {
             {'A', 'E', 'I', 'O', 'U', 'L', 'N', 'R', 'S', 'T'},
             {'D', 'G'},
             {'B', 'C', 'M', 'P'},
@@ -15,23 +15,16 @@ public class Scrabble {
     };
     /*int[] index2 = {0, 1};
     int[] values2 = {8, 10};*/
-    char[][] letterValues2 = {
+    final private static char[][] letterValues2 = {
             {'J', 'X'},
             {'Q', 'Z'}
     };
 
-    private String word;
+    final private String word;
     private Character[] doubleLetters;
     private Character[] tripleLetters;
     private boolean doubleWord;
     private boolean tripleWord;
-
-    private int tempLetterScore;
-
-    // main
-    public static void main(String[] args) {
-
-    }
 
     // constructors
     public Scrabble(String word) {
@@ -48,66 +41,58 @@ public class Scrabble {
     }
 
     // methods
-    public int score() {
-        int score = 0;
+    public byte score() {
+        byte score = 0;
         if (this.word != null) {
             char[] charArr = this.word.toUpperCase().toCharArray();
-            for (int i = 0; i < charArr.length; i++) {
-                int letterScore = letterScore(charArr[i]);
-                if (this.doubleLetters != null && this.tripleLetters != null) {
-                    if (applyDoubleLetterBonus(charArr[i])) {
-                        letterScore *= 2;
-                    } else if (applyTripleLetterBonus(charArr[i])) {
-                        letterScore *= 3;
-                    }
-                }
+            for (char letter : charArr) {
+                byte letterScore = letterScore2(letter);
                 score += letterScore;
             }
+            score = applyWordBonus(score);
         }
-
-        // apply bonus for double/triple words
-        score = applyWordBonus(score);
-
         return score;
     }
 
-    public int letterScore(char letter) {
-        int letterScore;
-        if (letter == 'J' || letter == 'X' || letter == 'Q' || letter == 'Z') {
-            letterScore = highValLetterScore(letter);
-        } else {
-            letterScore = lowValLetterScore(letter);
+    public byte letterScore2(char letter) {
+        byte letterScore = letterScore(letter);
+        if (this.doubleLetters != null && this.tripleLetters != null) {
+            if (applyDoubleLetterBonus(letter)) {
+                letterScore *= 2;
+            } else if (applyTripleLetterBonus(letter)) {
+                letterScore *= 3;
+            }
         }
         return letterScore;
     }
 
-    public int lowValLetterScore(char letter) {
-        int score = 0;
-        for (int i = 0; i < letterValues.length; i++) {
-            for (int j = 0; j < letterValues[i].length; j++) {
-                if (letter == letterValues[i][j]) {
-                    score = i + 1;
-                    break;
+    public byte letterScore(char letter) {
+        byte letterScore;
+        if (letter == 'J' || letter == 'X' || letter == 'Q' || letter == 'Z') {
+            letterScore = calculateLetterValue(letter, letterValues2);
+        } else {
+            letterScore = calculateLetterValue(letter, letterValues);
+        }
+        return letterScore;
+    }
+
+    public byte calculateLetterValue(char letter, char[][] conversionTable) {
+        byte score = 0;
+        for (byte i = 0; i < conversionTable.length; i++) {
+            for (byte j = 0; j < conversionTable[i].length; j++) {
+                if (letter == conversionTable[i][j]) {
+                    if (conversionTable == letterValues) {
+                        score = (byte) (i + 1);
+                    } else {
+                        score = (byte) (2 * i + 8);
+                    }
                 }
             }
         }
         return score;
     }
 
-    public int highValLetterScore(char letter) {
-        int score = 0;
-        for (int i = 0; i < letterValues2.length; i++) {
-            for (int j = 0; j < letterValues2[i].length; j++) {
-                if (letter == letterValues2[i][j]) {
-                    score += 2 * i + 8;
-                    break;
-                }
-            }
-        }
-        return score;
-    }
-
-    public int applyWordBonus(int score) {
+    public byte applyWordBonus(byte score) {
         if (this.doubleWord) {
             score *= 2;
         } else if (this.tripleWord) {
@@ -117,7 +102,7 @@ public class Scrabble {
     }
 
     public boolean applyDoubleLetterBonus(char letter) {
-        for (int i = 0; i < this.doubleLetters.length; i++) {
+        for (byte i = 0; i < this.doubleLetters.length; i++) {
             if (letter == this.doubleLetters[i]) {
                 this.doubleLetters[i] = '\u0000';
                 return true;
@@ -127,7 +112,7 @@ public class Scrabble {
     }
 
     public boolean applyTripleLetterBonus(char letter) {
-        for (int i = 0; i < this.tripleLetters.length; i++) {
+        for (byte i = 0; i < this.tripleLetters.length; i++) {
             if (letter == this.tripleLetters[i]) {
                 this.tripleLetters[i] = '\u0000';
                 return true;
@@ -135,7 +120,4 @@ public class Scrabble {
         }
         return false;
     }
-
-
-
 }
