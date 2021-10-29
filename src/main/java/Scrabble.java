@@ -1,3 +1,5 @@
+import org.w3c.dom.ls.LSOutput;
+
 import java.util.Locale;
 
 public class Scrabble {
@@ -18,15 +20,10 @@ public class Scrabble {
     };
 
     private String word;
-    private char[] doubleLetters;
-    private char[] tripleLetters;
+    private Character[] doubleLetters;
+    private Character[] tripleLetters;
     private boolean doubleWord;
     private boolean tripleWord;
-
-    // getters
-    public String getWord() {
-        return this.word;
-    }
 
     // main
     public static void main(String[] args) {
@@ -38,7 +35,8 @@ public class Scrabble {
         this.word = word;
     }
 
-    public Scrabble(String word, char[] doubleLetters, char[] tripleLetters, boolean doubleWord, boolean tripleWord){
+    public Scrabble(String word, Character[] doubleLetters,
+                    Character[] tripleLetters, boolean doubleWord, boolean tripleWord) {
         this.word = word;
         this.doubleLetters = doubleLetters;
         this.tripleLetters = tripleLetters;
@@ -48,7 +46,7 @@ public class Scrabble {
 
     // methods
     public int score() {
-        String word = this.getWord();
+        String word = this.word;
         int score = 0;
         if (word != null) {
             char[] charArr = word.toUpperCase().toCharArray();
@@ -56,6 +54,7 @@ public class Scrabble {
                 score += letterScore(charArr[i]);
             }
         }
+        score = applyWordBonus(score);
         return score;
     }
 
@@ -93,6 +92,14 @@ public class Scrabble {
         return score;
     }
 
+    public int applyWordBonus(int score) {
+        if (this.doubleWord) {
+            score *= 2;
+        } else if (this.tripleWord) {
+            score *= 3;
+        }
+        return score;
+    }
 
 
 }
