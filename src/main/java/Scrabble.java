@@ -54,11 +54,12 @@ public class Scrabble {
             char[] charArr = this.word.toUpperCase().toCharArray();
             for (int i = 0; i < charArr.length; i++) {
                 int letterScore = letterScore(charArr[i]);
-
-                if (applyDoubleLetterBonus(charArr[i])) {
-                    letterScore *= 2;
-                } else if (applyTripleLetterBonus(charArr[i])) {
-                    letterScore *= 3;
+                if (this.doubleLetters != null && this.tripleLetters != null) {
+                    if (applyDoubleLetterBonus(charArr[i])) {
+                        letterScore *= 2;
+                    } else if (applyTripleLetterBonus(charArr[i])) {
+                        letterScore *= 3;
+                    }
                 }
                 score += letterScore;
             }
