@@ -1,5 +1,6 @@
 import org.w3c.dom.ls.LSOutput;
 
+import java.util.Arrays;
 import java.util.Locale;
 
 public class Scrabble {
@@ -24,6 +25,8 @@ public class Scrabble {
     private Character[] tripleLetters;
     private boolean doubleWord;
     private boolean tripleWord;
+
+    private int tempLetterScore;
 
     // main
     public static void main(String[] args) {
@@ -52,9 +55,15 @@ public class Scrabble {
             char[] charArr = word.toUpperCase().toCharArray();
             for (int i = 0; i < charArr.length; i++) {
                 score += letterScore(charArr[i]);
+                if (applyDoubleLetterBonus(charArr[i])) {
+                    score *= 2;
+                };
             }
         }
+
+        // apply bonus for double/triple words
         score = applyWordBonus(score);
+
         return score;
     }
 
@@ -99,6 +108,16 @@ public class Scrabble {
             score *= 3;
         }
         return score;
+    }
+
+    public boolean applyDoubleLetterBonus(char letter) {
+        for (int i = 0; i < this.doubleLetters.length; i++) {
+            if (letter == this.doubleLetters[i]) {
+                this.doubleLetters[i] = '\u0000';
+                return true;
+            }
+        }
+        return false;
     }
 
 
