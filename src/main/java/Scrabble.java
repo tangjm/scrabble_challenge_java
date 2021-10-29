@@ -57,9 +57,9 @@ public class Scrabble {
     public byte letterScore2(char letter) {
         byte letterScore = letterScore(letter);
         if (this.doubleLetters != null && this.tripleLetters != null) {
-            if (applyDoubleLetterBonus(letter)) {
+            if (applyLetterBonus(letter, this.doubleLetters)) {
                 letterScore *= 2;
-            } else if (applyTripleLetterBonus(letter)) {
+            } else if (applyLetterBonus(letter, this.tripleLetters)) {
                 letterScore *= 3;
             }
         }
@@ -101,20 +101,10 @@ public class Scrabble {
         return score;
     }
 
-    public boolean applyDoubleLetterBonus(char letter) {
-        for (byte i = 0; i < this.doubleLetters.length; i++) {
-            if (letter == this.doubleLetters[i]) {
-                this.doubleLetters[i] = '\u0000';
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean applyTripleLetterBonus(char letter) {
-        for (byte i = 0; i < this.tripleLetters.length; i++) {
-            if (letter == this.tripleLetters[i]) {
-                this.tripleLetters[i] = '\u0000';
+    public boolean applyLetterBonus(char letter, Character[] letterBonusArr) {
+        for (byte i = 0; i < letterBonusArr.length; i++) {
+            if (letter == letterBonusArr[i]) {
+                letterBonusArr[i] = '\u0000';
                 return true;
             }
         }
