@@ -49,17 +49,18 @@ public class Scrabble {
 
     // methods
     public int score() {
-        String word = this.word;
         int score = 0;
-        if (word != null) {
-            char[] charArr = word.toUpperCase().toCharArray();
+        if (this.word != null) {
+            char[] charArr = this.word.toUpperCase().toCharArray();
             for (int i = 0; i < charArr.length; i++) {
-                score += letterScore(charArr[i]);
+                int letterScore = letterScore(charArr[i]);
+
                 if (applyDoubleLetterBonus(charArr[i])) {
-                    score *= 2;
+                    letterScore *= 2;
                 } else if (applyTripleLetterBonus(charArr[i])) {
-                    score *= 3;
+                    letterScore *= 3;
                 }
+                score += letterScore;
             }
         }
 
@@ -70,7 +71,7 @@ public class Scrabble {
     }
 
     public int letterScore(char letter) {
-        int letterScore = 0;
+        int letterScore;
         if (letter == 'J' || letter == 'X' || letter == 'Q' || letter == 'Z') {
             letterScore = highValLetterScore(letter);
         } else {
@@ -85,6 +86,7 @@ public class Scrabble {
             for (int j = 0; j < letterValues[i].length; j++) {
                 if (letter == letterValues[i][j]) {
                     score = i + 1;
+                    break;
                 }
             }
         }
@@ -97,6 +99,7 @@ public class Scrabble {
             for (int j = 0; j < letterValues2[i].length; j++) {
                 if (letter == letterValues2[i][j]) {
                     score += 2 * i + 8;
+                    break;
                 }
             }
         }
