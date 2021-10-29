@@ -22,7 +22,7 @@ public class Scrabble {
     }
 
     public String getWord() {
-        return word;
+        return this.word;
     }
 
     public Scrabble(String word) {
@@ -31,13 +31,16 @@ public class Scrabble {
 
     public int score() {
         String word = this.getWord();
-        char[] charArr = word.toCharArray();
+
         int score = 0;
-        for (int i = 0; i < charArr.length; i++) {
-            for (int j = 0; j < letterValues.length; j++) {
-                for (int k = 0; k < letterValues[j].length; k++) {
-                    if (letterValues[j][k] == charArr[i]) {
-                        score += j + 1;
+        if (word != null) {
+            char[] charArr = word.toCharArray();
+            for (int i = 0; i < charArr.length; i++) {
+                for (int j = 0; j < letterValues.length; j++) {
+                    for (int k = 0; k < letterValues[j].length; k++) {
+                        if (letterValues[j][k] == charArr[i]) {
+                            score += j + 1;
+                        }
                     }
                 }
             }
