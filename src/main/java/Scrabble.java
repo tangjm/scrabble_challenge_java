@@ -45,6 +45,16 @@ public class Scrabble {
                             score += j + 1;
                         }
                     }
+                    if (j < 2) {
+                        for (int k = 0 ; k < letterValues2[j].length; k++) {
+                            if (charArr[i] == letterValues2[j][k] && j == 0) {
+                                score += 8;
+                            }
+                            if (charArr[i] == letterValues2[j][k] && j == 1) {
+                                score += 10;
+                            }
+                        }
+                    }
                 }
             }
         }
