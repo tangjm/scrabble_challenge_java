@@ -1,3 +1,5 @@
+import java.util.Locale;
+
 public class Scrabble {
     char[][] letterValues = {
             {'A', 'E', 'I', 'O', 'U', 'L', 'N', 'R', 'S', 'T'},
@@ -17,12 +19,13 @@ public class Scrabble {
 
     private String word;
 
-    public static void main(String[] args) {
-
-    }
-
+    // constructor
     public String getWord() {
         return this.word;
+    }
+
+    public static void main(String[] args) {
+
     }
 
     public Scrabble(String word) {
@@ -34,7 +37,7 @@ public class Scrabble {
 
         int score = 0;
         if (word != null) {
-            char[] charArr = word.toCharArray();
+            char[] charArr = word.toUpperCase().toCharArray();
             for (int i = 0; i < charArr.length; i++) {
                 for (int j = 0; j < letterValues.length; j++) {
                     for (int k = 0; k < letterValues[j].length; k++) {
@@ -47,6 +50,7 @@ public class Scrabble {
         }
         return score;
     }
+
 
 
 }
