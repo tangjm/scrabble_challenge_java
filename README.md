@@ -1,7 +1,8 @@
 ## Instructions
 
 1. Fork this repository and clone your forked repository:
-2. Run the tests from IntelliJ. You can run your test suite in a few ways:
+2. Make sure you have a Java Development Kit and a Java Virtual Environment.
+3. Run the tests from IntelliJ. You can run your test suite in a few ways:
     1. Right-click on the project and then select `Run all Tests`
     2. Right-click on the `ScrabbleTest` and click `Run ScrabbleTest`
     3. Open the`ScrabbleTest`  class file and click the "Play" button to the 
