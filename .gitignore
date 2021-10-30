@@ -3,6 +3,8 @@
 /.idea/workspace.xml
 .DS_Store
 .idea/libraries/
-target/
+target
+target/classes/
+target/test-classes/
 
 
