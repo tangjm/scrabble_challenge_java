@@ -7,6 +7,8 @@
     2. Right-click on the `ScrabbleTest` and click `Run ScrabbleTest`
     3. Open the`ScrabbleTest`  class file and click the "Play" button to the 
        left of the class declaration
+4. To skip tests, add `@Ignore` above or below the line that `@Test` 
+   is on.
 
 ## My approach
 
